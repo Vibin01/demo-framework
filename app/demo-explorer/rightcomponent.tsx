@@ -3,10 +3,64 @@ import { BarChart3, RotateCcw, TrendingUp } from "lucide-react";
 import React, { useEffect, useState } from "react";
 import ReactECharts from "echarts-for-react";
 
-export const RightComponent = () => {
+const dummyData = {
+  Department: {
+    id: "Department",
+    levels: ["Level 3", "Level 2", "Level 1"],
+    series: [
+      { name: "Work-Life Balance", data: [25, 20, 15] },
+      { name: "Coordination", data: [10, 15, 10] },
+      { name: "Career Growth", data: [20, 25, 20] },
+      { name: "Employer Branding", data: [15, 10, 15] },
+      { name: "Interview Feedback", data: [20, 20, 25] },
+      { name: "Feedback", data: [10, 10, 15] },
+    ],
+  },
+
+  Location: {
+    id: "Location",
+    levels: ["Level 3", "Level 2", "Level 1"],
+    series: [
+      { name: "Nagercoil", data: [20, 18, 12] },
+      { name: "Chennai", data: [15, 12, 8] },
+      { name: "Bangalore", data: [18, 22, 20] },
+      { name: "Thiruvananthapuram", data: [12, 10, 15] },
+      { name: "Other", data: [20, 18, 25] },
+    ],
+  },
+
+  "Primary skills": {
+    id: "Primary skills",
+    levels: ["Level 3", "Level 2", "Level 1"],
+    series: [
+      { name: "Communication", data: [18, 22, 16] },
+      { name: "Leadership", data: [12, 14, 10] },
+      { name: "Creativity", data: [25, 28, 22] },
+      { name: "Skills", data: [10, 8, 12] },
+      { name: "Experience", data: [20, 18, 25] },
+    ],
+  },
+
+  Recruiter: {
+    id: "Recruiter",
+    levels: [ "Level 2", "Level 1"],
+    series: [
+      { name: "Vibin", data: [22, 15, 18] },
+      { name: "Akash", data: [18, 12, 10] },
+      { name: "Ramesh", data: [15, 20, 22] },
+      { name: "Suresh", data: [10, 15, 12] },
+      { name: "Other", data: [20, 18, 20] },
+      { name: "Demo", data: [15, 20, 18] },
+    ],
+  },
+};
+
+export const RightComponent = ({ activeTab, activeFilter }: { activeTab: string; activeFilter: string }) => {
   const [active, setActive] = useState("levels");
 
-  const [fontSize, setFontSize] = useState(12);
+  const [fontSize, setFontSize] = useState(12); 
+
+  const selectedData = dummyData[activeFilter as keyof typeof dummyData] || dummyData["Department"];
 
   useEffect(() => {
     const updateFontSize = () => {
@@ -19,6 +73,16 @@ export const RightComponent = () => {
 
     return () => window.removeEventListener("resize", updateFontSize);
   }, []);
+
+
+  const colors = [
+  "#DBEAFE",
+  "#BFDBFE",
+  "#93C5FD",
+  "#60A5FA",
+  "#3B82F6",
+  "#2563EB",
+];
 
 const barOption = {
   tooltip: {
@@ -57,78 +121,19 @@ top: "5%",
 
   yAxis: {
     type: "category",
-    data: ["Level 1", "Level 2", "Level 3", ],
+    data: selectedData.levels,
     axisLine: { show: true, lineStyle: { color: "#000", width: 1, }, },
      axisLabel: { fontSize: fontSize, },
   },
 
-  series: [
-     {
-      name: "Work-Life Balance",
-      type: "bar",
-      stack: "total",
-      color: "#A7C7E7",
-      data: [10, 20, 30,],
-    
-      emphasis: {
-        focus: "series",
-      },
-    },
-    {
-      name: "Coordination",
-      type: "bar",
-      stack: "total",
-      color: "#7FB3D5",
-      data: [10, 15, 20,],
-      emphasis: {
-        focus: "series",
-      },
-    },
-    {
-      name: "Career Growth",
-      type: "bar",
-      stack: "total",
-      color: "#4A90E2",
-      data: [20, 25, 15,],
-     
-      emphasis: {
-        focus: "series",
-      },
-    },
-    {
-      name: "Employer Branding",
-      type: "bar",
-      stack: "total",
-      color: "#2E86DE",
-      data: [10, 10, 15],
-     
-      emphasis: {
-        focus: "series",
-      },
-    },
-    {
-      name: "Interview Feedback",
-      type: "bar",
-      stack: "total",
-      color: "#1B4F72",
-      data: [30, 30, 20, 45, 30],
-     
-      emphasis: {
-        focus: "series",
-      },
-    },
-     {
-      name: "Feedback",
-      type: "bar",
-      stack: "total",
-      color: "#1B4F72",
-      data: [30, 3, 20],
-     
-      emphasis: {
-        focus: "series",
-      },
-    },
-  ],
+  series: selectedData.series.map((item, index) => ({
+  name: item.name,
+  type: "bar",
+  stack: "total",
+  itemStyle: { color: colors[index] },
+  emphasis: { focus: "series" },
+  data: item.data,
+}))
 };
   const donutOption = {
   tooltip: {
@@ -154,6 +159,7 @@ top: "5%",
       height: "80%",
       radius: ["65%", "90%"],
       center: ["50%", "50%"], 
+
       label: {
         show: true,
         position: "center",
@@ -176,32 +182,25 @@ top: "5%",
           <div className="flex items-center gap-4">
             <button
               onClick={() => setActive("levels")}
-              className={`flex items-center gap-2 
-              text-p px-[8%] py-[2%] 
-              rounded-lg font-medium transition-all
-              bg-white shadow-sm text-gray-900
-              ${active === "levels" ? "  " : "text-gray-600 hover:bg-white"}`}
+              className={`btn-with-icon text-p 
+              ${active === "levels" ? "  " : "text-gray-600 bg-blue-600 hover:bg-white"}`}
             >
-              <BarChart3 className="size-[clamp(8px,1.2vw,52px)]" />
+              <BarChart3 className="icon-size" />
               Levels
             </button>
 
             <button
               onClick={() => setActive("trend")}
-              className={`flex items-center gap-2  min-w-fit
-             text-p px-[8%] py-[2%] 
-              rounded-lg font-medium transition-all
-                bg-white shadow-sm text-gray-900
-              ${active === "trend" ? "" : "text-gray-600 hover:bg-white"}`}
+              className={`btn-with-icon text-p
+              ${active === "trend" ? "" : "text-gray-600 bg-blue-600 hover:bg-white"}`}
             >
-              <TrendingUp className="size-[clamp(8px,1.2vw,52px)]" />
+              <TrendingUp className="icon-size" />
               Trend Analysis
             </button>
           </div>
 
-          {/* Right Refresh Icon */}
           <button className="p-2 rounded-full hover:bg-white transition-all">
-            <RotateCcw className="text-blue-600"/>
+            <RotateCcw className="text-blue-600 icon-size"/>
           </button>
         </div>
       </div>
@@ -209,7 +208,7 @@ top: "5%",
         <div className="w-[65%] h-[70vh]   border p-[2%] rounded-2xl">
           <div className="flex justify-between border-b border-gray-200 pb-[2%] mb-[3%]">
             <h2 className="text-h4 font-semibold">
-              Decline Reasons - Across Levels
+              Decline Reasons - All {selectedData.id}
             </h2>
             <span className="font-medium text-h4">Total Declines - 10</span>
           </div>
@@ -217,8 +216,7 @@ top: "5%",
           <ReactECharts option={barOption} style={{ height: "90%" }} />
         </div>
         <div className="w-[35%] h-[70vh] border p-[2%] rounded-2xl">
-          <h2 className="text-h4 font-semibold border-b border-gray-200 pb-[2%] mb-[3%]">Decline % - By Level</h2>
-
+          <h2 className="text-h4 font-semibold border-b border-gray-200 pb-[3%] mb-[3%]">Decline % - By Level</h2>
           <ReactECharts option={donutOption} style={{ height: "90%" }} />
         </div>
       </div>

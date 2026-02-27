@@ -1,9 +1,17 @@
 'use client';
 import { Settings, MapPin, GraduationCap, User, ChevronDown } from "lucide-react";
-import { useState } from "react";
 
-export default function ExplorerSidebar() {
-  const [activeTab, setActiveTab] = useState("interview");
+export default function ExplorerSidebar({
+  activeTab,
+  setActiveTab,
+  activeFilter,
+  setActiveFilter,
+}: {
+  activeTab: string;
+  setActiveTab: (tab: string) => void;
+  activeFilter: string;
+  setActiveFilter: (filter: string) => void;
+}) {
 
   const filters = [
     { icon: Settings, label: "Department" },
@@ -19,7 +27,7 @@ export default function ExplorerSidebar() {
       <div className="space-y-2">
         <button
           onClick={() => setActiveTab("interview")}
-          className={`w-full text-left text-p px-[6%] py-[4%] rounded-[4px] lg:rounded-[8px] font-medium transition-all
+          className={`btn-left-align text-p
             ${
               activeTab === "interview"
                 ? "bg-blue-600 text-white"
@@ -31,7 +39,7 @@ export default function ExplorerSidebar() {
 
         <button
           onClick={() => setActiveTab("offer")}
-          className={`w-full text-left text-p px-[6%] py-[4%] rounded-[4px] lg:rounded-[8px] font-medium transition-all
+          className={`btn-left-align text-p
             ${
               activeTab === "offer"
                 ? "bg-blue-600 text-white"
@@ -52,13 +60,16 @@ export default function ExplorerSidebar() {
           {filters.map(({ icon: Icon, label }) => (
             <div
               key={label}
+              onClick={() => setActiveFilter(label)}
               className="flex items-center justify-between cursor-pointer group"
             >
-              <div className="flex items-center gap-[0.7vw] text-gray-700  transition-colors">
-                <Icon  className="text-gray-400  size-[clamp(8px,1.2vw,52px)]" />
+              <div className={`flex items-center gap-[0.7vw]  transition-colors
+                ${activeFilter === label ? "text-blue-600" : ""}
+                `}>
+                <Icon  className="text-gray-400  icon-size" />
                 <span className="text-p">{label}</span>
               </div>
-              <ChevronDown  className="text-gray-400 size-[clamp(8px,1.2vw,52px)]" />
+              <ChevronDown  className="text-gray-400 icon-size" />
             </div>
           ))}
         </div>

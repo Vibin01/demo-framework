@@ -10,21 +10,41 @@
 
   .text-h1{
     @apply text-[clamp(12px,2vw,120px)] font-semibold;
+
 }
 
 .text-h4{
-  font-size: clamp(9px,1.2vw,56px);
+  @apply text-[clamp(9px,1.3vw,56px)] font-medium;
 }
 
-.text-small{
-  font-size: clamp(5px,1vw,32px);
+.text-h6{
+  @apply text-[clamp(7px,1.2vw,48px)] font-medium;
 }
 
 .text-p{
-  font-size: clamp(7px,1.1vw,48px);
+  @apply text-[clamp(7px,1.1vw,48px)] font-medium;
 }
+
+.text-small{
+  @apply text-[clamp(5px,1vw,32px)] font-medium;
+}
+
+.icon-size{
+  @apply size-[clamp(8px,1.4vw,52px)]
+}
+
 
 }
 
+.btn-with-icon{
+ @apply flex items-center gap-2  min-w-fit
+              px-[8%] py-[2%] 
+              rounded-lg font-medium transition-all
+                bg-white shadow-sm
+}
+
+.btn-left-align {
+  @apply w-full text-left px-[6%] py-[4%] rounded-[4px] lg:rounded-[8px] font-medium transition-all
+}
 
 
