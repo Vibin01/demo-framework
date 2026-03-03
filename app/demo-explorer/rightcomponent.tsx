@@ -5,6 +5,7 @@ import ReactECharts from "echarts-for-react";
 import { dummyData } from "../../data/analyticsData";
 import { useResponsiveFont } from "../../hooks/useResponsiveFont";
 import { getBarOption, getDonutOption } from "../../lib/chartAnalytics";
+import TrendChart from "./TrendChart";
 
 
 
@@ -54,7 +55,9 @@ const fontSize = useResponsiveFont();
           </button>
         </div>
       </div>
-      <div className="analytics-dashboard_content">
+      <div className="analytics-dashboard_content ">
+         {active === "levels" ? (
+          <>
         <div className="analytics-dashboard_barchart">
           <div className="analytics-dashboard__card-header">
             <h2>Decline Reasons - All {selectedData.id}</h2>
@@ -64,6 +67,7 @@ const fontSize = useResponsiveFont();
             <ReactECharts option={getBarOption(selectedData, fontSize)} className="analytics-dashboard__chart" style={{height:""}} />
           {/* </div> */}
         </div>
+       
         <div className="analytics-dashboard_piechart">
           <h2 className="analytics-dashboard__card-header">
             Decline % - By Level
@@ -74,7 +78,15 @@ const fontSize = useResponsiveFont();
             />
           {/* </div> */}
         </div>
-      </div>
+        </>
+     ) : (
+      <>
+      
+          <TrendChart/>
+          </>
+        )}
+     </div>
+
     </div>
   );
 };

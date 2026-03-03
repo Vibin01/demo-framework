@@ -2,24 +2,25 @@
 import { useState } from "react";
 import ExplorerSidebar from "./leftcomponent";
 import { RightComponent } from "./rightcomponent";
+import KPICardGrid from "@/component/KPICardGrid";
 
 const page = () => {
 
    const [activeTab, setActiveTab] = useState("interview");
     const [activeFilter, setActiveFilter] = useState("Department");
 
-  const statsData = [
-    { title: "Target Fixed", value: 50, percent: "50.0%", type: "negative" },
-    { title: "Schedules", value: 84, percent: "70.0%", type: "negative" },
+  const statsData: Array<{ label: string; value: number; percent: string; trend: "down" | "up" }> = [
+    { label: "Target Fixed", value: 50, percent: "50.0%", trend: "down" },
+    { label: "Schedules", value: 84, percent: "70.0%", trend: "down" },
     {
-      title: "Interview No-Show",
+      label: "Interview No-Show",
       value: 5,
       percent: "29.41%",
-      type: "negative",
+      trend: "down",
     },
-    { title: "Offer", value: 36, percent: "87.8%", type: "negative" },
-    { title: "Offer No-Show", value: 2, percent: "15.38%", type: "negative" },
-    { title: "Joined", value: 9, percent: "100%", type: "positive" },
+    { label: "Offer", value: 36, percent: "87.8%", trend: "down" },
+    { label: "Offer No-Show", value: 2, percent: "15.38%", trend: "down" },
+    { label: "Joined", value: 9, percent: "100%", trend: "up" },
   ];
 
   return (
@@ -35,33 +36,9 @@ const page = () => {
           </span>
         </div>
 
-        <div className="nav-summary-card-grid">
-          {statsData.map((item, index) => (
-            <div
-              key={index}
-              className="nav-summary-card-container"
-            >
-              <p className="text-center text-h6 font-semibold">{item.title}</p>
 
-              <div className="nav-summary-card-value-container">
-                <span className="text-h4">{item.value}</span>
-
-                <div
-                  className={`nav-summary-badge text-h6 ${
-                    item.type === "positive"
-                      ? "is_active"
-                      : "f"
-                  }`}
-                >
-                  <div>
-                    <span>{item.type === "positive" ? "+" : "-"}</span>
-                    <span>{item.percent}</span>
-                  </div>
-                </div>
-              </div>
-            </div>
-          ))}
-        </div>
+        <KPICardGrid data={statsData} />
+        
       </div>
       <div className="flex">
         <ExplorerSidebar activeTab={activeTab}

@@ -11,9 +11,9 @@
   --text-h3: clamp(9px, 1.4vw, 56px);
   --text-h4: clamp(7px, 1.3vw, 48px);
   --text-h5: clamp(7px, 1.2vw, 48px);
-  --text-h6: clamp(7px, 1.2vw, 48px);
-  --text-p: clamp(7px, 1.1vw, 48px);
-  --text-small: clamp(5px, 1vw, 32px);
+  --text-h6: clamp(7px, 1.1vw, 48px);
+  --text-p: clamp(7px, 1vw, 48px);
+  --text-small: clamp(5px, 0.9vw, 32px);
   --text-xsmall: clamp(4px, 0.8vw, 24px);
   --icon-size: clamp(8px, 1.2vw, 52px);
   --btn-rounded: 0.5vw;
@@ -91,28 +91,28 @@
     @apply w-[2.5vw] h-auto;
   }
 
-  .nav-summary-card-grid {
-    @apply grid grid-cols-6 gap-[0.8vw] h-[72%] w-[75%];
+  .nav-kpi-card-grid {
+    @apply grid grid-cols-6 gap-[0.8vw] h-[72%] w-[70%];
   }
 
-  .nav-summary-card-container {
+  .nav-kpi-card-container {
     @apply text-nowrap p-[2%] h-full bg-[#E6F0FC] rounded-[var(--btn-rounded)] flex flex-col justify-between;
   }
 
-  .nav-summary-card-value-container {
+  .nav-kpi-card-value-container {
     @apply flex items-center justify-evenly py-[5%]
   }
 
-  .nav-summary-card {
+  .nav-kpi-card {
     @apply flex items-center justify-evenly py-[5%];
   }
 
-  .nav-summary-badge {
+  .nav-kpi-badge {
     @apply flex items-center px-2 rounded-[var(--btn-rounded)] justify-between pr-[6%] h-fit py-[1%] font-medium;
     @apply bg-[#F5DBD6] text-[#F0431D]
   }
 
-  .nav-summary-badge.is_active {
+  .nav-kpi-badge.is_active {
     @apply bg-[#CEF2BD] text-[#2B9B43];
 
   }
@@ -168,12 +168,17 @@
 
   .btn-with-icon {
     @apply flex items-center gap-2 min-w-fit px-[8%] py-[2%] rounded-[var(--btn-rounded)] font-medium transition-all bg-white shadow-sm;
-    @apply text-gray-600 hover:bg-white;
+    @apply text-gray-600 ;
   }
 
   .is-active {
     @apply bg-blue-600 text-white;
   }
+
+  .analytics-dashboard_trendchart{
+    @apply w-full p-[2%] h-[70vh];
+  }
+
 }
 
 
